@@ -1,0 +1,98 @@
+
+1)AddBooksComponent.js-----------------------------------------
+
+import React, { useState } from 'react';
+
+const AddBooksComponent = ({ onAddBook }) => {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [dueDate, setDueDate] = useState('');
+
+  const handleAddBook = () => {
+    const newBook = {
+      title,
+      description,
+      dueDate,
+    };
+
+    onAddBook(newBook);
+
+    // Clear input fields after adding book
+    setTitle('');
+    setDescription('');
+    setDueDate('');
+  };
+
+  return (
+    <div>
+      <h2>Add Book</h2>
+      <div className="form-group">
+        <label>Title:</label>
+        <input
+          type="text"
+          className="form-control"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+      </div>
+      <div className="form-group">
+        <label>Description:</label>
+        <textarea
+          className="form-control"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        ></textarea>
+      </div>
+      <div className="form-group">
+        <label>Due Date:</label>
+        <input
+          type="date"
+          className="form-control"
+          value={dueDate}
+          onChange={(e) => setDueDate(e.target.value)}
+        />
+      </div>
+      <button className="btn btn-primary" onClick={handleAddBook}>
+        Add Book
+      </button>
+    </div>
+  );
+};
+
+export default AddBooksComponent;
+
+
+
+2) BooksListComponent.js:-----------------
+
+
+
+import React from 'react';
+
+const BooksListComponent = ({ books }) => {
+  return (
+    <div>
+      <h2>Books List</h2>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Book Title</th>
+            <th>Description</th>
+            <th>Due Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {books.map((book, index) => (
+            <tr key={index}>
+              <td>{book.title}</td>
+              <td>{book.description}</td>
+              <td>{book.dueDate}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default BooksListComponent;
