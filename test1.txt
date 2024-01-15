@@ -1,0 +1,44 @@
+FROM openjdk:11-jre-slim
+
+WORKDIR /app
+
+COPY . .
+
+RUN javac Main.java
+
+CMD ["java", "Main"]
+
+
+-------------------
+b)
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class AmazonSearchTest {
+    public static void main(String[] args) {
+        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
+
+        WebDriver driver = new ChromeDriver();
+
+        driver.get("https://www.amazon.in/");
+
+        WebElement searchBox = driver.findElement(By.id("twotabsearchtextbox"));
+        searchBox.sendKeys("Laptop");
+
+        WebElement searchButton = driver.findElement(By.id("nav-search-submit-button"));
+        searchButton.click();
+
+        String expectedTitle = "Amazon.in : Laptop";
+        String actualTitle = driver.getTitle();
+
+        if (actualTitle.equals(expectedTitle)) {
+            System.out.println("Test Passed!");
+        } else {
+            System.out.println("Test Failed!");
+        }
+
+        driver.quit();
+    }
+}
